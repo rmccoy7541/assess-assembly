@@ -21,6 +21,8 @@ while getopts "a:r:f:" opt; do
      esac
 done
 
+wget https://nash-bioinformatics-codelets.googlecode.com/files/split_fasta.pl
+
 PWD=$(pwd)
 mkdir $PWD/results
 WORKDIR=$PWD/results; export WORKDIR
