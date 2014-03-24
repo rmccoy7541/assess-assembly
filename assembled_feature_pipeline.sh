@@ -32,10 +32,10 @@ printf "\nReading assembly: $ASSEMBLY...\n"
 printf "Mapping to reference genome: $REFERENCE.  This step can take over an hour...\n"
 
 #perform alignment with NUCmer
-nucmer --mum --prefix $WORKDIR/out --nooptimize --breaklen 500 --maxgap 500 $REFERENCE $ASSEMBLY 1> $WORKDIR/assembled_feature_pipeline.stdout 2> $WORKDIR/assembled_feature_pipeline.stderr
+nucmer --maxmatch --prefix $WORKDIR/out $REFERENCE $ASSEMBLY 1> $WORKDIR/assembled_feature_pipeline.stdout 2> $WORKDIR/assembled_feature_pipeline.stderr
 
 printf "Filtering alignment...\n"
-delta-filter -r $WORKDIR/out.delta > $WORKDIR/out.filter
+delta-filter -q $WORKDIR/out.delta > $WORKDIR/out.filter
 show-coords -rc $WORKDIR/out.filter > $WORKDIR/out.filter.2
 cat $WORKDIR/out.filter.2 | sed '1,5d' > $WORKDIR/out.coords
 awk '{print $15"\t"$1"\t"$2"\t"$16"\t"$4"\t"$5"\t"$19}' $WORKDIR/out.coords > $WORKDIR/out.coords.reformat
